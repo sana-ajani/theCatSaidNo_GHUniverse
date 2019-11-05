@@ -12,14 +12,14 @@ In this lab, you will Visual Studio Code remote development features to work on 
 
 ## Open the dev container workspace
 
-1. Fork the following repo: https://github.com/sana-ajani/theCatSaidNo-GHU
+1. Fork the following repo: https://github.com/sana-ajani/theCatSaidNo_GHUniverse
 
 1. Open the Windows Terminal, and clone the sample app and open using Visual Studio Code:
 
     ```cmd
-    git clone https://github.com/<yourusername>/theCatSaidNo-GHU
+    git clone https://github.com/<yourusername>/theCatSaidNo_GHUniverse
 
-    cd theCatSaidNo
+    cd theCatSaidNo_GHUniverse
 
     code . -r
     ```
