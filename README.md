@@ -72,21 +72,14 @@ We'll use GitHub actions to automate our deployment workflow for this web app.
 
 1. Select the **Python application** template (not the Python Package one!) and click "Set up this workflow".
 
-1. Add the following lines at the end of the workflow YAML file. This specifies that we want to deploy the web app using the publish profile method. 
+1. In VS Code, go to the `assets` folder of the repo and open the `deploy.yml` file. In here, we've copied the few lines of code you'll need to add to the workflow template. Change the `app-name` to the name of your web app and paste these lines of code to the end of the `pythonapp.yml` file in GitHub.
 
-    ```
-    - uses: azure/webapps-deploy@v1
-        with:
-        app-name: theCatSaidNo-sana2  # Replace with your app name
-        publish-profile: ${{ secrets.WebApp_PublishProfile }}
-    ```
-
-1. Once you're done, click on "Start commit". When you commit the file, it will trigger the workflow.
+1. Once you're done, click on "Start commit". Committing the file will trigger the workflow.
 
 1. You can go back to the Actions tab, click on your workflow, and you can see the deploy taking place. 
 
 
-## Test our your app!
+## Test out your app!
 
 1. Back in VS Code, go to the App Service extension, and right click on your app service and click on "Browse Website". 
 
