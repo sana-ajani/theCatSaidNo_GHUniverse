@@ -50,18 +50,18 @@ In this lab, you will:
 
 1. Click the `Reopen in Container` prompt, or press `F1` and select the `Reopen folder in dev container` command.
 
-   ![](images/reopen-in-container.png)
+   ![](assets/images/reopen-in-container.png)
 
 VS Code is creating the container now. Since this is the first time we are creating it, it'll take a few minutes, but the next time you reconnect to an existing container will be pretty quick. VS Code is also installing a component called "VS Code Server" in the container so you can directly interact with code, the file system, and extensions in the remote workspace.
 
 1. Notice the indicator in the bottom left corner tells us we are inside our dev container.
 
-   ![](images/remote-indicator.png)
+   ![](assets/images/remote-indicator.png)
 
 
 1. Press `F1` and run the command "Open new terminal". Once you are in the new terminal instance, notice we're actually in Bash! Type the command `uname` to see that we're in a Linux environment right now. Run the command `python --version` to check that the version of Python in our remote container is different than the one that is on our local machine. 
 
-   ![](images/linux-bash.png)
+   ![](assets/images/linux-bash.png)
 
 1. Press `F5` to run the app inside the container
 
@@ -76,7 +76,7 @@ Instead of running this locally, let's create this as a web app hosted in Azure.
 
 1. Click on the `+` icon to create a new app service under the **VSCode GitHub Universe HOL** subscription.
 
-   ![](images/create-app-service.png)
+   ![](assets/images/create-app-service.png)
 
 
 1. Give your webapp a unique name (we recommend calling it **theCatSaidNo-{your name}**)
@@ -93,27 +93,27 @@ We'll use GitHub actions to automate our deployment workflow for this web app.
 
 1. From the Overview page, click on "Get publish profile". A publish profile is a kind of deployment credential, useful when you don't own the Azure subscription. Open the downloaded settings file in VS Code and copy the contents of the file.
 
-   ![](images/get-publish-profile.png)
+   ![](assets/images/get-publish-profile.png)
 
 
 1. We will now add the publish profile as a secret associated with this repo. On the GitHub repository, click on the "Settings" tab.
 
-   ![](images/github-settings.png)
+   ![](assets/images/github-settings.png)
 
 
 1. Go to "Secrets". Create a new secret called "WebApp_PublishProfile" and paste the contents from the settings file.
 
-   ![](images/create-secret.png)
+   ![](assets/images/create-secret.png)
 
 
 1. Now click on "Actions" in the top bar and create a new workflow. 
 
-   ![](images/new-action.png)
+   ![](assets/images/new-action.png)
 
 
 1. Find the **Python application** template (not the Python Package one!) and select "Set up this workflow".
 
-   ![](images/python-action.png)
+   ![](assets/images/python-action.png)
 
 
 1. Let's get into the details of what this workflow is doing.
@@ -176,13 +176,13 @@ We'll use GitHub actions to automate our deployment workflow for this web app.
             publish-profile: ${{ secrets.WebApp_PublishProfile }}
     ```
 
-   ![](images/add-yaml.png)
+   ![](assets/images/add-yaml.png)
 
 1. Once you're done, click on "Start commit". Committing the file will trigger the workflow.
 
 1. You can go back to the Actions tab, click on your workflow, and see that the workflow is queued or being deployed. Wait for the job to complete successfully.
 
-   ![](images/workflow-complete.png)
+   ![](assets/images/workflow-complete.png)
 
 ## Test out your app!
 
@@ -196,7 +196,7 @@ We'll use GitHub actions to automate our deployment workflow for this web app.
     </div>
     ```
 
-    ![](images/add-html-code.png)
+    ![](assets/images/add-html-code.png)
 
 
 1. In the terminal, run the following commands:
