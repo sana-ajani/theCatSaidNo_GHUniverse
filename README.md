@@ -116,15 +116,65 @@ We'll use GitHub actions to automate our deployment workflow for this web app.
    ![](images/python-action.png)
 
 
-1. Change the `app-name` to the name of your web app and paste these lines of code to the end of the `pythonapp.yml` file in GitHub.
+1. Let's get into the details of what this workflow is doing.
 
-```
-    - uses: azure/webapps-deploy@v1
-    
-      with:
-        app-name:  # Replace with your app name
-        publish-profile: ${{ secrets.WebApp_PublishProfile }}
-```
+   - **Workflow Triggers**: Your workflow is set up to run on push events to the branch
+     
+     ```yaml
+        on: [push]
+     ```
+
+     For more information, see [Events that trigger workflows](https://help.github.com/articles/events-that-trigger-workflows).
+   
+   - **Running your jobs on hosted runners:** GitHub Actions provides hosted runners for Linux, Windows, and macOS. We specified hosted runner in our workflow as below.
+
+       ```yaml
+       jobs:
+       build:
+       runs-on: ubuntu-latest
+
+      ```
+   - **Using an action**: Actions are reusable units of code that can be built and distributed by anyone on GitHub. To use an action, you must specify the repository that contains the action.
+      
+      ```yaml
+      - uses: actions/checkout@v1
+       - name: Set up Python 3.7
+         uses: actions/setup-python@v1
+         with:
+            python-version: 3.7
+      ```
+
+   - **Running a command**: You can run commands on the job's virtual machine. We are running below python commands commands to install dependencies in our requirements.txt, lint, and test our application.
+
+      ```yaml
+        - name: Install dependencies
+        run: 
+            python -m pip install --upgrade pip
+            pip install -r requirements.txt
+        - name: Lint with flake8
+         run: 
+            pip install flake8
+            # stop the build if there are Python syntax errors or undefined names
+            flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+            # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+            flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+        - name: Test with pytest
+         run: 
+            pip install pytest
+            pytest
+     ```
+
+    >For workflow syntax for GitHub Actions see [here](https://help.github.com/en/github/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions)
+
+1. Now, paste these lines of code to the end of the `pythonapp.yml` file in GitHub. Change the `app-name` to the name of your web app. We are using [GitHub Azure Actions](https://github.com/Azure/actions/blob/master/README.md)to login to Azure with the publish profile stored in GitHub secrets which you created previously.
+
+    ```yml
+        - uses: azure/webapps-deploy@v1
+        
+        with:
+            app-name:  # Replace with your app name
+            publish-profile: ${{ secrets.WebApp_PublishProfile }}
+    ```
 
    ![](images/add-yaml.png)
 
@@ -140,7 +190,7 @@ We'll use GitHub actions to automate our deployment workflow for this web app.
 
 1. Let's test our GitHub Actions workflow we just made. Add the following lines of code to `templates/home.html` in the body class, after we load in the catpaw image:
 
-    ```
+    ```html
     <div>
         <h1 style="text-align:center;"> Press the button!<h1>
     </div>
@@ -151,7 +201,7 @@ We'll use GitHub actions to automate our deployment workflow for this web app.
 
 1. In the terminal, run the following commands:
 
-    ```
+    ```cmd
     git add .
     git commit -m "test ci/cd"
     git push
