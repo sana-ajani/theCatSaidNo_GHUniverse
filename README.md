@@ -144,7 +144,7 @@ We'll use GitHub actions to automate our deployment workflow for this web app.
             python-version: 3.7
       ```
 
-   - **Running a command**: You can run commands on the job's virtual machine. We are running below python commands commands to install dependencies in our requirements.txt, lint, and test our application.
+   - **Running a command**: You can run commands on the job's virtual machine. We are running the python commands below to install dependencies in our requirements.txt, lint, and test our application.
 
       ```yaml
         - name: Install dependencies
