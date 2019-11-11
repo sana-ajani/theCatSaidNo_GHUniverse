@@ -22,9 +22,9 @@ In this lab, you will:
 
 ### Prerequisites
 
-1. You will need a **GitHub** account. If you do not have one, you can sign up for free [here](https://github.com/join)
-
 1. Your Windows machine should have Python 3.7, Docker, and Visual Studio Code, and the VS Code Remote Development extensions installed. 
+
+1. You will be given a test GitHub account and an Azure account under the **VSCode GitHub Universe HOL** subscription.
 
 ### Setting up the GitHub repo
 
