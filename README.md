@@ -1,4 +1,4 @@
-# Deploying a Python Web App from a Dev Container in VS Code using GitHub actions
+# Deploying a Python Web App from a Dev Container in VS Code using GitHub Actions
 
 In this lab, you will Visual Studio Code remote development features to work on a Python Flask application in a dockerized development environment. You will then deploy the app to Azure App Service and set up a CI/CD workflow using GitHub Actions
 
