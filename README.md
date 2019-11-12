@@ -174,9 +174,9 @@ We'll use GitHub actions to automate our deployment workflow for this web app.
 
     ```yml
       - uses: azure/webapps-deploy@v1
-        with:
-            app-name:  # Replace with your app name
-            publish-profile: ${{ secrets.{yourname}_LAB}}
+      with:
+          app-name:  # Replace with your app name
+          publish-profile: ${{ secrets.{yourname}_LAB}}
     ```
 
    ![](assets/images/add-yaml.png)
