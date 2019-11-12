@@ -1,7 +1,5 @@
 # Deploying a Python Web App from a Dev Container in VS Code using GitHub Actions
 
-In this lab, you will Visual Studio Code remote development features to work on a Python Flask application in a dockerized development environment. You will then deploy the app to Azure App Service and set up a CI/CD workflow using GitHub Actions
-
 ## Overview
 
 The **Visual Studio Code Remote - Containers** extension lets you use a Docker container as a full-featured development environment. It allows you to open any folder inside (or mounted into) a container and use all of VS Code's features like IntelliSense, code navigation, and debugging.
