@@ -34,6 +34,7 @@ In this lab, you will:
 
 1. Now that you have a fork of the repo to play with, clone the repo. 
 
+
 1. Open up the Windows Terminal and open the repo in Visual Studio Code. 
 
     ```cmd
@@ -41,7 +42,7 @@ In this lab, you will:
 
     cd theCatSaidNo_GHUniverse
 
-    code . -r
+    code . 
     ```
 
 ## Open the dev container workspace
@@ -65,7 +66,7 @@ VS Code is creating the container now. Since this is the first time we are creat
 
 1. Press `F5` to run the app inside the container
 
-1. Browse to [`localhost:9000`](http://localhost:9000/) and try out the app! 
+1. Open up Edge and go to [`localhost:9000`](http://localhost:9000/) and try out the app! 
 
 
 ## Create an Azure App Service
@@ -83,7 +84,9 @@ Instead of running this locally, let's create this as a web app hosted in Azure.
 
 1. Select **Linux** as your OS and **Python 3.7** as your runtime. 
 
-1. Browse to your new site! 
+1. It will take a minute or two to create the app, and you'll get a prompt once it's done to browse to your new site.
+
+1. Deploy to this manually *****
 
 ## Set up CI/CD with GitHub Actions 
 
@@ -91,22 +94,23 @@ We'll use GitHub actions to automate our deployment workflow for this web app.
 
 1. Inside the App Service extension, right click on the name of your app service and choose "Open in Portal".
 
-1. From the Overview page, click on "Get publish profile". A publish profile is a kind of deployment credential, useful when you don't own the Azure subscription. Open the downloaded settings file in VS Code and copy the contents of the file.
+1. From the Overview page, click on "Get publish profile". A publish profile is a kind of deployment credential, useful when you don't own the Azure subscription. 
 
    ![](assets/images/get-publish-profile.png)
 
+1. Open the downloaded settings file in VS Code and copy the contents of the file.
 
 1. We will now add the publish profile as a secret associated with this repo. On the GitHub repository, click on the "Settings" tab.
 
    ![](assets/images/github-settings.png)
 
 
-1. Go to "Secrets". Create a new secret called "WebApp_PublishProfile" and paste the contents from the settings file.
+1. Go to "Secrets". Create a new secret and call it "{yourname}_LAB" and paste the contents from the settings file.
 
    ![](assets/images/create-secret.png)
 
 
-1. Now click on "Actions" in the top bar and create a new workflow. 
+1. Now click on "Actions" in the top bar. Under the "Popular continuous integration workflows" section, click on the "Workflows for Python, Maven, Docker, and more" button to open up more templates.  
 
    ![](assets/images/new-action.png)
 
@@ -118,7 +122,7 @@ We'll use GitHub actions to automate our deployment workflow for this web app.
 
 1. Let's get into the details of what this workflow is doing.
 
-   - **Workflow Triggers**: Your workflow is set up to run on push events to the branch
+   - **Workflow Triggers (line 3)**: Your workflow is set up to run on push events to the branch
      
      ```yaml
         on: [push]
@@ -126,15 +130,15 @@ We'll use GitHub actions to automate our deployment workflow for this web app.
 
      For more information, see [Events that trigger workflows](https://help.github.com/articles/events-that-trigger-workflows).
    
-   - **Running your jobs on hosted runners:** GitHub Actions provides hosted runners for Linux, Windows, and macOS. We specified hosted runner in our workflow as below.
+   - **Running your jobs on hosted runners (line 8):** GitHub Actions provides hosted runners for Linux, Windows, and macOS. We specified hosted runner in our workflow as below.
 
        ```yaml
        jobs:
-       build:
-       runs-on: ubuntu-latest
+        build:
+        runs-on: ubuntu-latest
 
       ```
-   - **Using an action**: Actions are reusable units of code that can be built and distributed by anyone on GitHub. To use an action, you must specify the repository that contains the action.
+   - **Using an action (line 11)**: Actions are reusable units of code that can be built and distributed by anyone on GitHub. To use an action, you must specify the repository that contains the action.
       
       ```yaml
       - uses: actions/checkout@v1
@@ -144,7 +148,7 @@ We'll use GitHub actions to automate our deployment workflow for this web app.
             python-version: 3.7
       ```
 
-   - **Running a command**: You can run commands on the job's virtual machine. We are running the python commands below to install dependencies in our requirements.txt, lint, and test our application.
+   - **Running a command (line 16)**: You can run commands on the job's virtual machine. We are running the Python commands below to install dependencies in our requirements.txt, lint, and test our application.
 
       ```yaml
         - name: Install dependencies
@@ -166,14 +170,13 @@ We'll use GitHub actions to automate our deployment workflow for this web app.
 
     >For workflow syntax for GitHub Actions see [here](https://help.github.com/en/github/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions)
 
-1. Now, paste these lines of code to the end of the `pythonapp.yml` file in GitHub. Change the `app-name` to the name of your web app. We are using [GitHub Azure Actions](https://github.com/Azure/actions/blob/master/README.md)to login to Azure with the publish profile stored in GitHub secrets which you created previously.
+1. Now, paste these lines of code to the end of the `pythonapp.yml` file in GitHub. Change the `app-name` to the name of your web app, which is "theCatSaidNo-{yourusername}". We are using [GitHub Azure Actions](https://github.com/Azure/actions/blob/master/README.md) to login to Azure with the publish profile stored in GitHub secrets which you created previously.
 
     ```yml
-        - uses: azure/webapps-deploy@v1
-        
+      - uses: azure/webapps-deploy@v1
         with:
             app-name:  # Replace with your app name
-            publish-profile: ${{ secrets.WebApp_PublishProfile }}
+            publish-profile: ${{ secrets.{yourname}_LAB}}
     ```
 
    ![](assets/images/add-yaml.png)
