@@ -30,19 +30,17 @@ In this lab, you will:
 
 "The Cat Said No" is a simple Python Flask web app. 
 
-1. Go to [this GitHub repo](https://github.com/sana-ajani/theCatSaidNo_GHUniverse) and click "Fork" in the upper-right hand corner. 
+1. Click the green "Clone" button in the upper-right hand corner and copy the URL.
 
-   ![](assets/images/fork-github.png)
-
-
-1. Now that you have a fork of the repo to play with, clone the repo. 
-
-
-1. Open up the Windows Terminal and open the repo in Visual Studio Code. 
+1. Open up the Windows Terminal and run the following command, pasting in the link you just copied.
 
     ```cmd
     git clone https://github.com/<yourusername>/theCatSaidNo_GHUniverse
+    ```
 
+1. Open the repo in Visual Studio Code. 
+
+    ```
     cd theCatSaidNo_GHUniverse
 
     code . 
@@ -56,7 +54,7 @@ In this lab, you will:
 
    ![](assets/images/reopen-in-container.png)
 
-VS Code is creating the container now. Since this is the first time we are creating it, it'll take a few minutes, but the next time you reconnect to an existing container will be pretty quick. VS Code is also installing a component called "VS Code Server" in the container so you can directly interact with code, the file system, and extensions in the remote workspace.
+VS Code is creating the container now. Since this is the first time we are creating it, it'll take a few minutes (but the next time you reconnect to an existing container will be pretty quick). VS Code is also installing a component called "VS Code Server" in the container so you can directly interact with code, the file system, and extensions in the remote workspace.
 
 1. Notice the indicator in the bottom left corner tells us we are inside our dev container.
 
@@ -223,4 +221,4 @@ We'll use GitHub actions to automate our deployment workflow for this web app.
     git push
     ```
 
-1. Browse back to your website!
+1. Go back to the Actions tab and you can watch the build finishing up. Once you see all the green check marks, go to Edge and browse to your new website!
