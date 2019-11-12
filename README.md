@@ -86,7 +86,7 @@ Instead of running this locally, let's create this as a web app hosted in Azure.
 
 1. Select **Linux** as your OS and **Python 3.7** as your runtime. 
 
-1. It will take a minute or two to create the app. Once it's done, you'll get a prompt to browse to your new site.
+1. It will take a minute or two to create the app. Once it's done, you'll get a prompt to browse to your new site. Click on "View output" and open the link to your site. 
 
     >Note: If creation of the app is taking a bit longer than you expect, call one of the proctors and we'll switch you to an already created app
 
@@ -192,7 +192,7 @@ We'll use GitHub actions to automate our deployment workflow for this web app.
 
 1. Once you're done, click on "Start commit". Fill in the text box with a commit message, and then click the "Commit change" button, which will trigger the workflow.
 
-1. You can go back to the Actions tab, click on your workflow, and see that the workflow is queued or being deployed. Wait for the job to complete successfully.
+1. You can go back to the Actions tab, click on your workflow, and see that the workflow is queued or being deployed. Wait for the job to complete successfully before going back to your website. 
 
    ![](assets/images/workflow-complete.png)
 
