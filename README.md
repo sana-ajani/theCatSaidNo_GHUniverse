@@ -32,6 +32,9 @@ In this lab, you will:
 
 1. Go to [this GitHub repo](https://github.com/sana-ajani/theCatSaidNo_GHUniverse) and click "Fork" in the upper-right hand corner. 
 
+   ![](assets/images/fork-github.png)
+
+
 1. Now that you have a fork of the repo to play with, clone the repo. 
 
 
@@ -73,7 +76,10 @@ VS Code is creating the container now. Since this is the first time we are creat
 
 Instead of running this locally, let's create this as a web app hosted in Azure. 
 
-1. Stop the app running locally. Click on the Azure icon in the sidebar. 
+1. Stop the app running locally by entering `Ctrl + C`  in the terminal. Click on the Azure icon in the sidebar. 
+
+   ![](assets/images/azure-sidebar.png)
+
 
 1. Click on the `+` icon to create a new app service under the **VSCode GitHub Universe HOL** subscription.
 
@@ -84,9 +90,14 @@ Instead of running this locally, let's create this as a web app hosted in Azure.
 
 1. Select **Linux** as your OS and **Python 3.7** as your runtime. 
 
-1. It will take a minute or two to create the app, and you'll get a prompt once it's done to browse to your new site.
+1. It will take a minute or two to create the app. Once it's done, you'll get a prompt to browse to your new site.
 
-1. Deploy to this manually *****
+    >Note: If creation of the app is taking a bit longer than you expect, call one of the proctors and we'll switch you to an already created app
+
+1. The page you browse to will be the default site you see, since we haven't yet deployed anything to the site.
+
+    ![](assets/images/python-default-site.png)
+
 
 ## Set up CI/CD with GitHub Actions 
 
@@ -94,18 +105,20 @@ We'll use GitHub actions to automate our deployment workflow for this web app.
 
 1. Inside the App Service extension, right click on the name of your app service and choose "Open in Portal".
 
+   ![](assets/images/open-in-portal.png)
+
 1. From the Overview page, click on "Get publish profile". A publish profile is a kind of deployment credential, useful when you don't own the Azure subscription. 
 
    ![](assets/images/get-publish-profile.png)
 
-1. Open the downloaded settings file in VS Code and copy the contents of the file.
+1. Open the settings file you just downloaded in VS Code and copy the contents of the file.
 
 1. We will now add the publish profile as a secret associated with this repo. On the GitHub repository, click on the "Settings" tab.
 
    ![](assets/images/github-settings.png)
 
 
-1. Go to "Secrets". Create a new secret and call it "{yourname}_LAB" and paste the contents from the settings file.
+1. Go to "Secrets". Create a new secret and call it "{yourname}_LAB". Paste the contents from the settings file.
 
    ![](assets/images/create-secret.png)
 
@@ -173,7 +186,7 @@ We'll use GitHub actions to automate our deployment workflow for this web app.
 1. Now, paste these lines of code to the end of the `pythonapp.yml` file in GitHub. Change the `app-name` to the name of your web app, which is "theCatSaidNo-{yourusername}". We are using [GitHub Azure Actions](https://github.com/Azure/actions/blob/master/README.md) to login to Azure with the publish profile stored in GitHub secrets which you created previously.
 
     ```yml
-      - uses: azure/webapps-deploy@v1
+    - uses: azure/webapps-deploy@v1
       with:
           app-name:  # Replace with your app name
           publish-profile: ${{ secrets.{yourname}_LAB}}
@@ -181,7 +194,7 @@ We'll use GitHub actions to automate our deployment workflow for this web app.
 
    ![](assets/images/add-yaml.png)
 
-1. Once you're done, click on "Start commit". Committing the file will trigger the workflow.
+1. Once you're done, click on "Start commit". Fill in the text box with a commit message, and then click the "Commit change" button, which will trigger the workflow.
 
 1. You can go back to the Actions tab, click on your workflow, and see that the workflow is queued or being deployed. Wait for the job to complete successfully.
 
