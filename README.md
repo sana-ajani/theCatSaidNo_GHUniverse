@@ -28,7 +28,7 @@ In this lab, you will:
 
 "The Cat Said No" is a simple Python Flask web app. 
 
-1. Click the "Fork" button in the upper-right hand corner. From there, click the green "Clone" button and copy the URL.
+1. Go to https://github.com/sana-ajani/theCatSaidNo_GHUniverse. Click the "Fork" button in the upper-right hand corner. From there, click the green "Clone" button and copy the URL.
 
    ![](assets/images/fork-github.png)
 
