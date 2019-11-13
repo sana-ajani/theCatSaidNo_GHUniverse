@@ -144,7 +144,7 @@ We'll use GitHub actions to automate our deployment workflow for this web app.
           publish-profile: ${{ secrets.LAB_PUBLISH_PROFILE }}
     ```
 
-   ![](assets/images/add-yaml.png)
+   ![](assets/images/add-yaml-file.png)
 
 1. Once you're done, click on "Start commit". Fill in the text box with a commit message, and then click the "Commit change" button, which will trigger the workflow.
 
