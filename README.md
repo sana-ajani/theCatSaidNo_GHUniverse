@@ -22,18 +22,21 @@ In this lab, you will:
 
 1. Your Windows machine should have Python 3.7, Docker, and Visual Studio Code, and the VS Code Remote Development extensions installed. 
 
-1. You will be given a test GitHub account and an Azure account under the **VSCode GitHub Universe HOL** subscription.
+1. You are using a GitHub account and an Azure account made for the purposes of this lab. These have been already logged into from your machine and the account info is saved.
 
 ### Setting up the GitHub repo
 
 "The Cat Said No" is a simple Python Flask web app. 
 
-1. Click the green "Clone" button in the upper-right hand corner and copy the URL.
+1. Click the "Fork" button in the upper-right hand corner. From there, click the green "Clone" button and copy the URL.
+
+   ![](assets/images/fork-github.png)
+
 
 1. Open up the Windows Terminal and run the following command, pasting in the link you just copied.
 
     ```cmd
-    git clone https://github.com/<yourusername>/theCatSaidNo_GHUniverse
+    git clone <pasted URL>
     ```
 
 1. Open the repo in Visual Studio Code. 
@@ -48,11 +51,11 @@ In this lab, you will:
 
 1. Notice the repo has a `.devcontainer` folder which contains a `Dockerfile` and a `devcontainer.json`. The dev container tells VS Code how to create a development container that has a specific runtime, extensions, and tools. In this case, the dev container is Python specific and tells VS Code to install the Python and Azure App Service extensions. 
 
-1. Click the `Reopen in Container` prompt, or press `F1` and select the `Reopen folder in dev container` command.
+1. Click the `Reopen in Container` prompt, or press `F1` and select the `Reopen folder in dev container` command.  
 
    ![](assets/images/reopen-in-container.png)
 
-VS Code is creating the container now. Since this is the first time we are creating it, it'll take a few minutes (but the next time you reconnect to an existing container will be pretty quick). VS Code is also installing a component called "VS Code Server" in the container so you can directly interact with code, the file system, and extensions in the remote workspace.
+1. Click on "Details" to see what is happening when VS Code is creating the container. VS Code is installing a component called "VS Code Server" in the container so you can directly interact with code, the file system, and extensions in the remote workspace. Since this is the first time we are creating it, it'll take a few minutes (but the next time you reconnect to an existing container will be pretty quick).
 
 1. Notice the indicator in the bottom left corner tells us we are inside our dev container.
 
@@ -72,7 +75,9 @@ VS Code is creating the container now. Since this is the first time we are creat
 
 Instead of running this locally, let's create this as a web app hosted in Azure. 
 
-1. Stop the app running locally by entering `Ctrl + C`  in the terminal. Click on the Azure icon in the sidebar. 
+1. Stop the app running locally by clicking on the red square in the debug toolbar. Click on the Azure icon in the sidebar. 
+
+   ![](assets/images/debug-toolbar.png)
 
    ![](assets/images/azure-sidebar.png)
 
@@ -82,7 +87,7 @@ Instead of running this locally, let's create this as a web app hosted in Azure.
    ![](assets/images/create-app-service.png)
 
 
-1. Give your webapp a unique name (we recommend calling it **theCatSaidNo-{your name}**)
+1. Give your webapp a unique name (we recommend calling it **YOUR_NAME-theCatSaidNo** )
 
 1. Select **Linux** as your OS and **Python 3.7** as your runtime. 
 
@@ -114,7 +119,7 @@ We'll use GitHub actions to automate our deployment workflow for this web app.
    ![](assets/images/github-settings.png)
 
 
-1. Go to "Secrets". Create a new secret and call it "{yourname}_LAB". Paste the contents from the settings file.
+1. Go to "Secrets". Create a new secret and call it "LAB_PUBLISH_PROFILE". Paste the contents from the settings file.
 
    ![](assets/images/create-secret.png)
 
@@ -128,10 +133,22 @@ We'll use GitHub actions to automate our deployment workflow for this web app.
 
    ![](assets/images/python-action.png)
 
+1. Now, paste these lines of code to the end of the `pythonapp.yml` file in GitHub. Change the `app-name` to the name of your web app. Here, we are using [GitHub Azure Actions](https://github.com/Azure/actions/blob/master/README.md) to login to Azure with the publish profile we stored in GitHub secrets previously.
 
-1. Let's get into the details of what this workflow is doing.
+    ```yml
+    - uses: azure/webapps-deploy@v1
+      with:
+          app-name:  # Replace with your app name
+          publish-profile: ${{ secrets.LAB_PUBLISH_PROFILE }}
+    ```
 
-   - **Workflow Triggers (line 3)**: Your workflow is set up to run on push events to the branch
+   ![](assets/images/add-yaml.png)
+
+1. Once you're done, click on "Start commit". Fill in the text box with a commit message, and then click the "Commit change" button, which will trigger the workflow.
+
+1. While the Action is being queued, let's get into the details of what this workflow is actually doing. Go to the `.github/workflows/pythonapp.yml` file to follow along. 
+
+   - **Workflow Triggers (line 3)**: Your workflow is set up to run on "push" events to the branch
      
      ```yaml
         on: [push]
@@ -139,7 +156,7 @@ We'll use GitHub actions to automate our deployment workflow for this web app.
 
      For more information, see [Events that trigger workflows](https://help.github.com/articles/events-that-trigger-workflows).
    
-   - **Running your jobs on hosted runners (line 8):** GitHub Actions provides hosted runners for Linux, Windows, and macOS. We specified hosted runner in our workflow as below.
+   - **Running your jobs on hosted runners (line 8):** GitHub Actions provides hosted runners for Linux, Windows, and macOS. We specify the hosted runner in our workflow as below.
 
        ```yaml
        jobs:
@@ -147,7 +164,7 @@ We'll use GitHub actions to automate our deployment workflow for this web app.
         runs-on: ubuntu-latest
 
       ```
-   - **Using an action (line 11)**: Actions are reusable units of code that can be built and distributed by anyone on GitHub. To use an action, you must specify the repository that contains the action.
+   - **Using an action (line 11)**: Actions are reusable units of code that can be built and distributed by anyone on GitHub. To use an action, you must specify the repository that contains the action. We are also specifying the version of Python runtime. 
       
       ```yaml
       - uses: actions/checkout@v1
@@ -157,7 +174,7 @@ We'll use GitHub actions to automate our deployment workflow for this web app.
             python-version: 3.7
       ```
 
-   - **Running a command (line 16)**: You can run commands on the job's virtual machine. We are running the Python commands below to install dependencies in our requirements.txt, lint, and test our application.
+   - **Running a command (line 16)**: You can run commands on the job's virtual machine. We are running the Python commands below to install the dependencies from our requirements.txt, and lint and test our application.
 
       ```yaml
         - name: Install dependencies
@@ -178,19 +195,6 @@ We'll use GitHub actions to automate our deployment workflow for this web app.
      ```
 
     >For workflow syntax for GitHub Actions see [here](https://help.github.com/en/github/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions)
-
-1. Now, paste these lines of code to the end of the `pythonapp.yml` file in GitHub. Change the `app-name` to the name of your web app, which is "theCatSaidNo-{yourusername}". We are using [GitHub Azure Actions](https://github.com/Azure/actions/blob/master/README.md) to login to Azure with the publish profile stored in GitHub secrets which you created previously.
-
-    ```yml
-    - uses: azure/webapps-deploy@v1
-      with:
-          app-name:  # Replace with your app name
-          publish-profile: ${{ secrets.{yourname}_LAB}}
-    ```
-
-   ![](assets/images/add-yaml.png)
-
-1. Once you're done, click on "Start commit". Fill in the text box with a commit message, and then click the "Commit change" button, which will trigger the workflow.
 
 1. You can go back to the Actions tab, click on your workflow, and see that the workflow is queued or being deployed. Wait for the job to complete successfully before going back to your website. 
 
