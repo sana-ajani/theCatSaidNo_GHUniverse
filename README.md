@@ -75,9 +75,11 @@ In this lab, you will:
 
 Instead of running this locally, let's create this as a web app hosted in Azure. 
 
-1. Stop the app running locally by clicking on the red square in the debug toolbar. Click on the Azure icon in the sidebar. 
+1. Stop the app running locally by clicking on the red square in the debug toolbar. 
 
    ![](assets/images/debug-tool-bar.png)
+
+1. Click on the Azure icon in the sidebar. 
 
    ![](assets/images/azure-sidebar.png)
 
