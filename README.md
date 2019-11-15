@@ -220,6 +220,7 @@ We'll use GitHub actions to automate our deployment workflow for this web app.
 1. In the terminal, run the following commands:
 
     ```cmd
+    git pull
     git add .
     git commit -m "test ci/cd"
     git push
